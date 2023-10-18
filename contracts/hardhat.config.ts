@@ -30,23 +30,23 @@ const config: HardhatUserConfig = {
     scrollSepolia: {
       url: "https://sepolia-rpc.scroll.io/" || "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
     },
     filecoinTest: {
       chainId: 314159,
       url: "https://api.calibration.node.glif.io/rpc/v1" || "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
     },
     mantle: {
       url: "https://rpc.mantle.xyz", //mainnet
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
     },
     mantleTest: {
       url: "https://rpc.testnet.mantle.xyz", // testnet
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
     }
   },
 };
