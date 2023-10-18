@@ -1,0 +1,76 @@
+diff --git a/L1/gateways/L1ERC721Gateway.sol b/L1/gateways/L1ERC721Gateway.sol
+index 2288183582289276f94ce9b27dc368d73f34297c..438a5f7c31bc0b038e5e0b2642c8c42dc8a92584 100644
+--- a/L1/gateways/L1ERC721Gateway.sol
++++ b/L1/gateways/L1ERC721Gateway.sol
+@@ -3,7 +3,7 @@
+ pragma solidity =0.8.16;
+ 
+ import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+-import {IERC721Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
++import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+ import {ERC721HolderUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC721/utils/ERC721HolderUpgradeable.sol";
+ 
+ import {IL2ERC721Gateway} from "../../L2/gateways/IL2ERC721Gateway.sol";
+@@ -55,7 +55,7 @@ contract L1ERC721Gateway is
+     /// @param _counterpart The address of L2ERC721Gateway in L2.
+     /// @param _messenger The address of L1ScrollMessenger.
+     function initialize(address _counterpart, address _messenger) external initializer {
+-        OwnableUpgradeable.__Ownable_init();
++        OwnableUpgradeable.__Ownable_init(msg.sender);
+         ERC721HolderUpgradeable.__ERC721Holder_init();
+ 
+         ScrollGatewayBase._initialize(_counterpart, address(0), _messenger);
+@@ -114,7 +114,7 @@ contract L1ERC721Gateway is
+         require(_l2Token != address(0), "token address cannot be 0");
+         require(_l2Token == tokenMapping[_l1Token], "l2 token mismatch");
+ 
+-        IERC721Upgradeable(_l1Token).safeTransferFrom(address(this), _to, _tokenId);
++        IERC721(_l1Token).safeTransferFrom(address(this), _to, _tokenId);
+ 
+         emit FinalizeWithdrawERC721(_l1Token, _l2Token, _from, _to, _tokenId);
+     }
+@@ -131,7 +131,7 @@ contract L1ERC721Gateway is
+         require(_l2Token == tokenMapping[_l1Token], "l2 token mismatch");
+ 
+         for (uint256 i = 0; i < _tokenIds.length; i++) {
+-            IERC721Upgradeable(_l1Token).safeTransferFrom(address(this), _to, _tokenIds[i]);
++            IERC721(_l1Token).safeTransferFrom(address(this), _to, _tokenIds[i]);
+         }
+ 
+         emit FinalizeBatchWithdrawERC721(_l1Token, _l2Token, _from, _to, _tokenIds);
+@@ -146,7 +146,7 @@ contract L1ERC721Gateway is
+                 _message[4:],
+                 (address, address, address, address, uint256)
+             );
+-            IERC721Upgradeable(_token).safeTransferFrom(address(this), _receiver, _tokenId);
++            IERC721(_token).safeTransferFrom(address(this), _receiver, _tokenId);
+ 
+             emit RefundERC721(_token, _receiver, _tokenId);
+         } else if (bytes4(_message[0:4]) == IL2ERC721Gateway.finalizeBatchDepositERC721.selector) {
+@@ -155,7 +155,7 @@ contract L1ERC721Gateway is
+                 (address, address, address, address, uint256[])
+             );
+             for (uint256 i = 0; i < _tokenIds.length; i++) {
+-                IERC721Upgradeable(_token).safeTransferFrom(address(this), _receiver, _tokenIds[i]);
++                IERC721(_token).safeTransferFrom(address(this), _receiver, _tokenIds[i]);
+             }
+             emit BatchRefundERC721(_token, _receiver, _tokenIds);
+         } else {
+@@ -197,7 +197,7 @@ contract L1ERC721Gateway is
+         require(_l2Token != address(0), "no corresponding l2 token");
+ 
+         // 1. transfer token to this contract
+-        IERC721Upgradeable(_token).safeTransferFrom(msg.sender, address(this), _tokenId);
++        IERC721(_token).safeTransferFrom(msg.sender, address(this), _tokenId);
+ 
+         // 2. Generate message passed to L2ERC721Gateway.
+         bytes memory _message = abi.encodeCall(
+@@ -229,7 +229,7 @@ contract L1ERC721Gateway is
+ 
+         // 1. transfer token to this contract
+         for (uint256 i = 0; i < _tokenIds.length; i++) {
+-            IERC721Upgradeable(_token).safeTransferFrom(msg.sender, address(this), _tokenIds[i]);
++            IERC721(_token).safeTransferFrom(msg.sender, address(this), _tokenIds[i]);
+         }
+ 
+         // 2. Generate message passed to L2ERC721Gateway.

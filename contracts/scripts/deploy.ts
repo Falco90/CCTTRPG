@@ -2,18 +2,23 @@ import { formatEther, parseEther } from "viem";
 import hre from "hardhat";
 
 async function main() {
-  const playerContract = await hre.viem.deployContract("Player");
+  // const playerContract = await hre.viem.deployContract("Player");
+
+  // console.log(
+  //   `Player Contract with ${playerContract.address}`
+  // );
+
+  // const gameMasterContract = await hre.viem.deployContract("GameMaster");
+
+  // console.log(
+  //   `GameMaster Contract with ${gameMasterContract.address}`
+  // );
+  
+  const L1ERC721GatewayContract = await hre.viem.deployContract("CCTTRPGL1ERC721Gateway");
 
   console.log(
-    `Player Contract with ${playerContract.address}`
+    `L1ERC721Gateway Contract with ${L1ERC721GatewayContract.address}`
   );
-
-  const gameMasterContract = await hre.viem.deployContract("GameMaster");
-
-  console.log(
-    `GameMaster Contract with ${gameMasterContract.address}`
-  );
-
 
 }
 

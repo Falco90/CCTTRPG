@@ -4,7 +4,7 @@ const dotenv = require("dotenv")
 dotenv.config();
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.19",
+  solidity: "0.8.20",
   etherscan: {
     apiKey: {
       scrollSepolia: "D62920783A4311EE9D6600155D570C742E"
