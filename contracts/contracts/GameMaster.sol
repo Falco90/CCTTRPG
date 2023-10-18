@@ -20,5 +20,8 @@ contract GameMaster {
 
     function createItem(string calldata _name) public returns (Item memory) {}
 
-    function abilityCheck(Attributes calldata _attributes) public {}
+    function abilityCheck(Attributes calldata _attributes) public {
+        // use Lit action for dice roll with attributes and difficulty condition as inputs
+        // if the result is true => do something, if the result is false => do something else
+    }
 }

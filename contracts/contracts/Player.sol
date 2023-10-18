@@ -28,6 +28,13 @@ contract Player {
         uint tokenId;
     }
 
+    modifier OnlyAvatarOwner {
+        // Only the owner of the Avatar(ERC721 on L1) can call functions with this modifier
+        // Read from L1 contract through Axelar / Scroll Messenger
+        // require(assetOwner == msg.sender)
+        _;
+    }
+
     function createCharacter(Avatar calldata _avatar, Attributes calldata _attributes) public {
         bytes memory id = abi.encodePacked(_avatar.contractAddress, _avatar.tokenId);
         
@@ -36,6 +43,6 @@ contract Player {
     }
 
     function abilityCheck(Attributes calldata _attributes) public {
-        
+        // Call GameMaster contract here through Axelar
     }
 }
