@@ -1,31 +1,19 @@
 import { formatEther, parseEther } from "viem";
 import hre from "hardhat";
 
+
 async function main() {
-  // const playerContract = await hre.viem.deployContract("Player");
+  // // Deploy the proxy contract based on your implementation contract
+  const L1ERC721GatewayImpl = await hre.ethers.getContractFactory('L1ERC721Gateway'); // Replace 'YourContract' with the name of your implementation contract
+  const L1ERC721GatewayInstance = await hre.upgrades.deployProxy(L1ERC721GatewayImpl, [], { initializer: 'initialize' }); // 'initialize' is the constructor function in your implementation contract
 
-  // console.log(
-  //   `Player Contract with ${playerContract.address}`
-  // );
+  console.log('Proxy contract deployed to:', L1ERC721GatewayInstance.address);
 
-  // const gameMasterContract = await hre.viem.deployContract("GameMaster");
+  // Deploy the proxy contract based on your implementation contract
+  // const L2ERC721GatewayImpl = await hre.ethers.getContractFactory('L2ERC721Gateway'); // Replace 'YourContract' with the name of your implementation contract
+  // const L2ERC721GatewayInstance = await hre.upgrades.deployProxy(L2ERC721GatewayImpl, [], { initializer: 'initialize' }); // 'initialize' is the constructor function in your implementation contract
 
-  // console.log(
-  //   `GameMaster Contract with ${gameMasterContract.address}`
-  // );
-  
-  const L1ERC721GatewayContract = await hre.viem.deployContract("CCTTRPGL1ERC721Gateway");
-
-  console.log(
-    `L1ERC721Gateway Contract with ${L1ERC721GatewayContract.address}`
-  );
-
-  // const L2ERC721GatewayContract = await hre.viem.deployContract("CCTTRPGL2ERC721Gateway");
-
-  // console.log(
-  //   `L2ERC721Gateway Contract with ${L2ERC721GatewayContract.address}`
-  // );
-
+  // console.log('Proxy contract deployed to:', L2ERC721GatewayInstance.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
