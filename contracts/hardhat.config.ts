@@ -1,13 +1,15 @@
 import { HardhatUserConfig } from "hardhat/config";
+import '@openzeppelin/hardhat-upgrades';
 import "@nomicfoundation/hardhat-toolbox-viem";
 const dotenv = require("dotenv")
 dotenv.config();
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.20",
+  solidity: "0.8.16",
   etherscan: {
     apiKey: {
-      scrollSepolia: "D62920783A4311EE9D6600155D570C742E"
+      scrollSepolia: "D62920783A4311EE9D6600155D570C742E",
+      sepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4"
     },
     customChains: [{
       network: "scrollSepolia",
@@ -23,6 +25,14 @@ const config: HardhatUserConfig = {
       urls: {
         apiURL: "https://explorer.testnet.mantle.xyz/api",
         browserURL: "https://explorer.testnet.mantle.xyz"
+      }
+    },
+    {
+      network: "sepolia",
+      chainId: 11155111,
+      urls: {
+        apiURL: "https://api-sepolia.etherscan.io/api",
+        browserURL: "https://sepolia.etherscan.io/"
       }
     }]
   },
@@ -47,7 +57,13 @@ const config: HardhatUserConfig = {
       url: "https://rpc.testnet.mantle.xyz", // testnet
       accounts:
         process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
-    }
+    },
+    sepolia: {
+      url: "https://eth-sepolia.g.alchemy.com/v2/demo",
+      accounts:
+        process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
+    },
+
   },
 };
 

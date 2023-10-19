@@ -14,11 +14,17 @@ async function main() {
   //   `GameMaster Contract with ${gameMasterContract.address}`
   // );
   
-  const L2ERC721GatewayContract = await hre.viem.deployContract("CCTTRPGL2ERC721Gateway");
+  const L1ERC721GatewayContract = await hre.viem.deployContract("CCTTRPGL1ERC721Gateway");
 
   console.log(
-    `L2ERC721Gateway Contract with ${L2ERC721GatewayContract.address}`
+    `L1ERC721Gateway Contract with ${L1ERC721GatewayContract.address}`
   );
+
+  // const L2ERC721GatewayContract = await hre.viem.deployContract("CCTTRPGL2ERC721Gateway");
+
+  // console.log(
+  //   `L2ERC721Gateway Contract with ${L2ERC721GatewayContract.address}`
+  // );
 
 }
 
