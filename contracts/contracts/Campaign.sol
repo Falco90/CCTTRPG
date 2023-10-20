@@ -56,7 +56,7 @@ abstract contract Campaign is Ownable {
     );
 
     constructor(address initialOwner) {}
-    
+
     modifier OnlyAvatarOwner() {
         // Only the owner of the Avatar(ERC721 on L1) can call functions with this modifier
         // Read from L1 contract through Axelar / Scroll Messenger
@@ -132,7 +132,7 @@ abstract contract Campaign is Ownable {
         string memory name,
         uint kind,
         string memory cid
-    ) public {
+    ) public onlyOwner {
         ItemType itemType;
         if (kind == 0) {
             itemType = ItemType.Equipment;
@@ -146,7 +146,10 @@ abstract contract Campaign is Ownable {
         itemLibrary[name] = Item(name, itemType, cid);
     }
 
-    function abilityCheck(string memory attribute, uint difficulty) public {
+    function abilityCheck(
+        string memory attribute,
+        uint difficulty
+    ) public onlyOwner {
         uint roll = rollD20();
         bool result = roll + characterAttributes[msg.sender][attribute] >=
             difficulty;
@@ -171,11 +174,11 @@ abstract contract Campaign is Ownable {
         address character,
         string memory attribute,
         uint value
-    ) public {
+    ) public onlyOwner {
         characterAttributes[character][attribute] += value;
     }
 
-    function levelUp(address character) public {
+    function levelUp(address character) public onlyOwner {
         characterAttributes[character]["level"] += 1;
         string memory name = characterAvatars[character].name;
         Class class = characterAvatars[character].class;
@@ -259,7 +262,10 @@ abstract contract Campaign is Ownable {
         }
     }
 
-    function giveItem(address character, string memory itemName) public {
+    function giveItem(
+        address character,
+        string memory itemName
+    ) public onlyOwner {
         Item memory item = itemLibrary[itemName];
         if (item.itemType == ItemType.Equipment) {
             Item[] storage equipment = characterInventories[character]
