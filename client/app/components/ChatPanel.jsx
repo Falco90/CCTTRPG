@@ -62,7 +62,7 @@ function ChatPanel() {
 
     return (
         <div>
-            <p>chat component</p>
+            <p>Chat</p>
             <p>{message}</p>
         </div>
     )

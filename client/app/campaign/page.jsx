@@ -22,8 +22,11 @@ export default function CampaignPage() {
             <main className="flex min-h-screen flex-row items-center justify-between p-24">
                 <EventLog />
                 <ChatPanel></ChatPanel>
-                {address == data ? <GameMasterPanel /> :
-                    <PlayerPanel />}
+                {/* {address == data ? 
+                <GameMasterPanel /> 
+                : */}
+                    <PlayerPanel />
+                    {/* } */}
             </main>
         </>
     )

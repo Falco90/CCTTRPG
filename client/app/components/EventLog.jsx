@@ -32,6 +32,13 @@ function EventLog() {
 
         });
     }
+
+    return (
+        <div>
+            <h2>Event Log</h2>
+            <p>{message}</p>
+        </div>
+    )
 }
 
 export default EventLog
