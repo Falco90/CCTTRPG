@@ -58,16 +58,17 @@ function UploadFileComponent() {
 
         const signedMessage = await signer.signMessage(messageRequested);
 
-        const json = {
+        const jsonObject = JSON.stringify({
             name: "Test name",
             text: " dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
-        } 
+        })
+
         await lighthouse.textUploadEncrypted(
-            json,
+            jsonObject,
             process.env.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
             address,
             signedMessage,
-            "test name"
+            jsonObject.name
         ).then((response) => {
             setCid(response.data.Hash)
         });
