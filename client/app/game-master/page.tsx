@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import lighthouse from '@lighthouse-web3/sdk';
 import { useState } from 'react'
 import { ethers } from 'ethers'

@@ -13,6 +13,8 @@
     "@pushprotocol/restapi": "^1.4.28",
     "@pushprotocol/socket": "^0.5.2",
     "@pushprotocol/uiweb": "^1.1.14",
+    "@web3modal/ethereum": "^2.7.1",
+    "@web3modal/react": "^2.7.1",
     "@web3modal/wagmi": "^3.1.0",
     "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
@@ -20,7 +22,7 @@
     "react": "^18",
     "react-dom": "^18",
     "viem": "^1.16.6",
-    "wagmi": "^1.4.4"
+    "wagmi": "^1.4.5"
   },
   "devDependencies": {
     "@types/node": "^20",

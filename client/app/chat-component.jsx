@@ -4,10 +4,9 @@ import { PushAPI } from '@pushprotocol/restapi';
 import { createSocketConnection, EVENTS } from '@pushprotocol/socket';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react'
-import { ChatViewComponent } from '@pushprotocol/uiweb'
+// import { ChatViewComponent } from '@pushprotocol/uiweb'
 
 function ChatComponent() {
-    console.log(ChatViewComponent)
     // Creating a random signer from a wallet, ideally this is the wallet you will connect
     const [message, setMessage] = useState("")
     const [chatId, setChatId] = useState("")
@@ -78,8 +77,6 @@ function ChatComponent() {
         <div>
             <p>chat component</p>
             <p>{message}</p>
-            {/* <CreateGroupModal /> */}
-
         </div>
     )
 }
