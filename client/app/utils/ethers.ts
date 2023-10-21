@@ -23,7 +23,6 @@ export function publicClientToProvider(publicClient: PublicClient) {
 
 /** Action to convert a viem Public Client to an ethers.js Provider. */
 export function getEthersProvider({ chainId }: { chainId?: number } = {}) {
-  console.log(chainId)
   const publicClient = getPublicClient({ chainId: chainId || 1 })
   return publicClientToProvider(publicClient)
 }
@@ -31,23 +30,19 @@ export function getEthersProvider({ chainId }: { chainId?: number } = {}) {
 
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient
-  console.log(chain, account, transport)
   const network = {
     chainId: chain.id,
     name: chain.name,
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
   const provider = new providers.Web3Provider(transport, network)
-  console.log(provider)
   const signer = provider.getSigner(account.address)
   return signer
 }
 
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
 export async function getEthersSigner({ chainId }: { chainId?: number } = {}) {
-  console.log(chainId)
   const walletClient = await getWalletClient({ chainId: chainId || 1 })
-  console.log("wallet client: ", walletClient)
   if (!walletClient) return undefined
   return walletClientToSigner(walletClient)
 }
