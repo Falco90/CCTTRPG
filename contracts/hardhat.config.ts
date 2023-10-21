@@ -8,9 +8,9 @@ const config: HardhatUserConfig = {
   solidity: "0.8.20",
   etherscan: {
     apiKey: {
-      scrollSepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4",
-      sepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4",
-      goerli: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4"
+      scrollSepolia: "D62920783A4311EE9D6600155D570C742E"
+      // sepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4",
+      // goerli: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4"
     },
     customChains: [{
       network: "scrollSepolia",

@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
-import { getEthersSigner } from "./utils/ethers"
+import { getEthersSigner } from "../utils/ethers"
 import { createWalletClient, custom } from 'viem'
-import { mainnet, scrollSepolia } from 'viem/chains'
+import { scrollSepolia } from 'viem/chains'
 import { useAccount } from 'wagmi'
 
-function DecryptFileComponent() {
+function Decrypt() {
     const [fileURL, setFileURL] = useState(null);
     const { address } = useAccount()
     const [signer, setSigner] = useState(null)
 
-    const client = createWalletClient({
+    createWalletClient({
         chain: scrollSepolia,
         transport: custom(window.ethereum)
     })
@@ -24,30 +23,22 @@ function DecryptFileComponent() {
     }, [address])
 
     async function getSigner() {
-
         const signer = await getEthersSigner({ chainId: 534351 })
         setSigner(signer)
-        console.log("address: ", address)
-        console.log("signer", signer)
     }
 
-    const encryptionSignature = async () => {
-        console.log(signer, address)
+    async function getSignature() {
         const messageRequested = (await lighthouse.getAuthMessage(address)).data.message;
-        console.log(messageRequested)
         const signedMessage = await signer.signMessage(messageRequested);
-        console.log(signedMessage)
         return ({
             signedMessage: signedMessage,
             publicKey: address
         });
     }
 
-    /* Decrypt file */
-    const decrypt = async () => {
-        // Fetch file encryption key
-        const cid = "QmTubxwjdVLtarZnsGMm5KG4s7L8JawRmPnL6VuAyjnY6W"; //replace with your IPFS CID
-        const { publicKey, signedMessage } = await encryptionSignature();
+    async function decrypt() {
+        const cid = "QmbuXaDMRE5Tnop4UV3maG6LtyYQ9bDeP9hYoP5MbBRxzk";
+        const { publicKey, signedMessage } = await getSignature();
         const keyObject = await lighthouse.fetchEncryptionKey(
             cid,
             publicKey,
@@ -57,9 +48,7 @@ function DecryptFileComponent() {
         const fileType = "application/json";
         const decrypted = await lighthouse.decryptFile(cid, keyObject.data.key, fileType);
 
-        // View File
         const url = URL.createObjectURL(decrypted);
-        console.log(url);
         setFileURL(url);
     }
 
@@ -76,4 +65,4 @@ function DecryptFileComponent() {
     );
 }
 
-export default DecryptFileComponent
+export default Decrypt

@@ -6,7 +6,7 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from 'react'
 // import { ChatViewComponent } from '@pushprotocol/uiweb'
 
-function ChatComponent() {
+function Chat() {
     // Creating a random signer from a wallet, ideally this is the wallet you will connect
     const [message, setMessage] = useState("")
     const [chatId, setChatId] = useState("")
@@ -81,4 +81,4 @@ function ChatComponent() {
     )
 }
 
-export default ChatComponent;
+export default Chat;
