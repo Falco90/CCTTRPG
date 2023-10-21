@@ -5,13 +5,12 @@ import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import ChatComponent from "../chat-component"
 import UploadFileComponent from "../upload-file-component"
-import { Web3Button } from '@web3modal/react'
 
 export default function CampaignPage() {
     const [message, setMessage] = useState("")
-    useEffect(() => {
-        querySubgraph();
-    }, [])
+    // useEffect(() => {
+    //     querySubgraph();
+    // }, [])
 
 
     async function querySubgraph() {
@@ -38,12 +37,12 @@ export default function CampaignPage() {
 
         });
     }
-    // Creating a random signer from a wallet, ideally this is the wallet you will connect
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <Web3Button />
+            <w3m-button />
             <div><h1>Campaign page</h1></div>
-            <p>{message}</p>
+            {/* <p>{message}</p> */}
             {/* <ChatComponent /> */}
             <h3>Player screen</h3>
             <button>Decrypt File</button>
