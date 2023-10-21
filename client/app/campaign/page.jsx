@@ -5,6 +5,7 @@ import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import ChatComponent from "../chat-component"
 import UploadFileComponent from "../upload-file-component"
+import DecryptFileComponent from "../decrypt-file-component"
 
 export default function CampaignPage() {
     const [message, setMessage] = useState("")
@@ -47,6 +48,7 @@ export default function CampaignPage() {
             <h3>Player screen</h3>
             <button>Decrypt File</button>
             <UploadFileComponent />
+            <DecryptFileComponent />
             <h3>Chatbox</h3>
         </main>
     )
