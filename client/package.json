@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@lighthouse-web3/sdk": "^0.2.8",
+    "@pushprotocol/restapi": "^1.4.28",
+    "@pushprotocol/socket": "^0.5.2",
+    "@pushprotocol/uiweb": "^1.1.14",
     "@web3modal/wagmi": "^3.1.0",
     "dotenv": "^16.3.1",
     "ethers": "^5.7.2",

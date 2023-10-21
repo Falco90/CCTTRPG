@@ -1,0 +1,14 @@
+{
+    "name": "Iron Sword",
+    "bonuses": [
+        {
+            "attribute": "strength",
+            "modifier": 1
+        },
+        {
+            "attribute": "constitution",
+            "modifier": 1
+        }
+    ],
+    "value": 10
+}

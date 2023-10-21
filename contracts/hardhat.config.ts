@@ -8,8 +8,9 @@ const config: HardhatUserConfig = {
   solidity: "0.8.20",
   etherscan: {
     apiKey: {
-      scrollSepolia: "D62920783A4311EE9D6600155D570C742E",
-      sepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4"
+      scrollSepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4",
+      sepolia: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4",
+      goerli: "2W9C8G2K6XUXR3HS3RJ2VK68BD9ZAS4HY4"
     },
     customChains: [{
       network: "scrollSepolia",
@@ -63,6 +64,11 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
     },
+    goerli: {
+      url: "https://goerli.blockpi.network/v1/rpc/public",
+      accounts:
+        process.env.EVM_PRIVATE_KEY !== undefined ? [process.env.EVM_PRIVATE_KEY] : [],
+    }
 
   },
 };

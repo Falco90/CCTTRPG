@@ -3,10 +3,9 @@ pragma solidity ^0.8.16;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-abstract contract Campaign is Ownable {
+contract Campaign is Ownable {
     mapping(string => Item) public itemLibrary;
-    mapping(address => mapping(string => uint)) characterAttributes;
-    mapping(address => Item) characterItems;
+    mapping(address => mapping(string => uint256)) characterAttributes;
     mapping(address => Avatar) characterAvatars;
     mapping(address => Inventory) characterInventories;
 
@@ -23,9 +22,9 @@ abstract contract Campaign is Ownable {
 
     struct Avatar {
         string name;
-        Class class;
+        Role role;
         address contractAddress;
-        uint tokenId;
+        uint256 tokenId;
     }
 
     enum ItemType {
@@ -34,7 +33,7 @@ abstract contract Campaign is Ownable {
         Other
     }
 
-    enum Class {
+    enum Role {
         Fighter,
         Wizard,
         Rogue,
@@ -42,38 +41,56 @@ abstract contract Campaign is Ownable {
         Ranger
     }
 
-    event CharacterCreated(string name, string class);
-    event AbilityCheck(string name, string attribute, uint roll, bool result);
+    struct Attribute {
+        string name;
+        uint256 value;
+    }
+
+    event CharacterCreated(string name, string role);
+    event AbilityCheck(
+        string name,
+        string attribute,
+        uint256 roll,
+        bool result
+    );
     event LevelUp(
         string name,
-        uint level,
-        string stat1,
-        uint value1,
-        string stat2,
-        uint value2,
-        string stat3,
-        uint value3
+        uint256 level,
+        string attribute1,
+        uint256 value1,
+        string attribute2,
+        uint256 value2,
+        string attribute3,
+        uint256 value3
     );
 
-    constructor(address initialOwner) {}
+    constructor(address initialOwner) Ownable(initialOwner) {}
 
-    modifier OnlyAvatarOwner() {
-        // Only the owner of the Avatar(ERC721 on L1) can call functions with this modifier
-        // Read from L1 contract through Axelar / Scroll Messenger
-        // require(assetOwner == msg.sender)
-        _;
+    function getCharacterAttribute(address character, string memory attribute)
+        public
+        view
+        returns (uint256)
+    {
+        return characterAttributes[character][attribute];
+    }
+
+    function getCharacterAvatar(address character) public view returns (Avatar memory) {
+        return characterAvatars[character];
+    }
+    function getCharacterInventory(address character) public view returns (Inventory memory) {
+        return characterInventories[character];
     }
 
     function createCharacter(
         string memory name,
-        uint classId,
+        uint256 roleId,
         address contractAddress,
-        uint tokenId,
-        uint _strength,
-        uint _intelligence,
-        uint _dexterity,
-        uint _constitution,
-        uint _charisma
+        uint256 tokenId,
+        uint256 _strength,
+        uint256 _intelligence,
+        uint256 _dexterity,
+        uint256 _constitution,
+        uint256 _charisma
     ) public {
         characterAttributes[msg.sender]["strength"] = _strength;
         characterAttributes[msg.sender]["intelligence"] = _intelligence;
@@ -85,42 +102,42 @@ abstract contract Campaign is Ownable {
         characterAttributes[msg.sender]["level"] = 1;
         characterAttributes[msg.sender]["gold"] = 0;
 
-        if (classId == 0) {
+        if (roleId == 0) {
             characterAvatars[msg.sender] = Avatar(
                 name,
-                Class.Fighter,
+                Role.Fighter,
                 contractAddress,
                 tokenId
             );
             emit CharacterCreated(name, "Fighter");
-        } else if (classId == 1) {
+        } else if (roleId == 1) {
             characterAvatars[msg.sender] = Avatar(
                 name,
-                Class.Wizard,
+                Role.Wizard,
                 contractAddress,
                 tokenId
             );
             emit CharacterCreated(name, "Wizard");
-        } else if (classId == 2) {
+        } else if (roleId == 2) {
             characterAvatars[msg.sender] = Avatar(
                 name,
-                Class.Rogue,
+                Role.Rogue,
                 contractAddress,
                 tokenId
             );
             emit CharacterCreated(name, "Rogue");
-        } else if (classId == 3) {
+        } else if (roleId == 3) {
             characterAvatars[msg.sender] = Avatar(
                 name,
-                Class.Cleric,
+                Role.Cleric,
                 contractAddress,
                 tokenId
             );
             emit CharacterCreated(name, "Cleric");
-        } else if (classId == 4) {
+        } else if (roleId == 4) {
             characterAvatars[msg.sender] = Avatar(
                 name,
-                Class.Ranger,
+                Role.Ranger,
                 contractAddress,
                 tokenId
             );
@@ -130,7 +147,7 @@ abstract contract Campaign is Ownable {
 
     function createItem(
         string memory name,
-        uint kind,
+        uint256 kind,
         string memory cid
     ) public onlyOwner {
         ItemType itemType;
@@ -146,12 +163,13 @@ abstract contract Campaign is Ownable {
         itemLibrary[name] = Item(name, itemType, cid);
     }
 
-    function abilityCheck(
-        string memory attribute,
-        uint difficulty
-    ) public onlyOwner {
-        uint roll = rollD20();
-        bool result = roll + characterAttributes[msg.sender][attribute] >=
+    function abilityCheck(address character, string memory attribute, uint256 difficulty)
+        public
+        onlyOwner
+        returns (bool)
+    {
+        uint256 roll = rollD20();
+        bool result = roll + characterAttributes[character][attribute] >=
             difficulty;
         emit AbilityCheck(
             characterAvatars[msg.sender].name,
@@ -159,10 +177,11 @@ abstract contract Campaign is Ownable {
             roll,
             result
         );
+        return result;
     }
 
-    function rollD20() public view returns (uint) {
-        uint randomValue = (uint(
+    function rollD20() public view returns (uint256) {
+        uint256 randomValue = (uint256(
             keccak256(
                 abi.encodePacked(block.timestamp, block.difficulty, msg.sender)
             )
@@ -173,7 +192,7 @@ abstract contract Campaign is Ownable {
     function updateAttribute(
         address character,
         string memory attribute,
-        uint value
+        uint256 value
     ) public onlyOwner {
         characterAttributes[character][attribute] += value;
     }
@@ -181,10 +200,10 @@ abstract contract Campaign is Ownable {
     function levelUp(address character) public onlyOwner {
         characterAttributes[character]["level"] += 1;
         string memory name = characterAvatars[character].name;
-        Class class = characterAvatars[character].class;
-        uint level = characterAttributes[character]["level"];
+        Role role = characterAvatars[character].role;
+        uint256 level = characterAttributes[character]["level"];
 
-        if (class == Class.Fighter) {
+        if (role == Role.Fighter) {
             updateAttribute(character, "strength", 1);
             updateAttribute(character, "constitution", 1);
             updateAttribute(character, "health", 30);
@@ -199,7 +218,7 @@ abstract contract Campaign is Ownable {
                 "health",
                 30
             );
-        } else if (class == Class.Wizard) {
+        } else if (role == Role.Wizard) {
             updateAttribute(character, "intelligence", 1);
             updateAttribute(character, "charisma", 1);
             updateAttribute(character, "health", 10);
@@ -214,7 +233,7 @@ abstract contract Campaign is Ownable {
                 "health",
                 10
             );
-        } else if (class == Class.Rogue) {
+        } else if (role == Role.Rogue) {
             updateAttribute(character, "dexterity", 1);
             updateAttribute(character, "charisma", 1);
             updateAttribute(character, "health", 20);
@@ -229,7 +248,7 @@ abstract contract Campaign is Ownable {
                 "health",
                 20
             );
-        } else if (class == Class.Cleric) {
+        } else if (role == Role.Cleric) {
             updateAttribute(character, "intelligence", 1);
             updateAttribute(character, "constitution", 1);
             updateAttribute(character, "health", 10);
@@ -244,7 +263,7 @@ abstract contract Campaign is Ownable {
                 "health",
                 10
             );
-        } else if (class == Class.Ranger) {
+        } else if (role == Role.Ranger) {
             updateAttribute(character, "dexterity", 1);
             updateAttribute(character, "constitution", 1);
             updateAttribute(character, "health", 20);
@@ -262,10 +281,10 @@ abstract contract Campaign is Ownable {
         }
     }
 
-    function giveItem(
-        address character,
-        string memory itemName
-    ) public onlyOwner {
+    function giveItem(address character, string memory itemName)
+        public
+        onlyOwner
+    {
         Item memory item = itemLibrary[itemName];
         if (item.itemType == ItemType.Equipment) {
             Item[] storage equipment = characterInventories[character]
