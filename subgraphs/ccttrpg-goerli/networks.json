@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "Campaign": {
+      "address": "0x5d95973282a9ef41360493c616E0f844F519F769",
+      "startBlock": 9911879
+    }
+  }
+}

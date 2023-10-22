@@ -1,0 +1,43 @@
+type AbilityCheck @entity(immutable: true) {
+  id: Bytes!
+  name: String! # string
+  attribute: String! # string
+  roll: BigInt! # uint256
+  result: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CharacterCreated @entity(immutable: true) {
+  id: Bytes!
+  name: String! # string
+  role: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LevelUp @entity(immutable: true) {
+  id: Bytes!
+  name: String! # string
+  level: BigInt! # uint256
+  attribute1: String! # string
+  value1: BigInt! # uint256
+  attribute2: String! # string
+  value2: BigInt! # uint256
+  attribute3: String! # string
+  value3: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

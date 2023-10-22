@@ -1,0 +1,347 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "initialOwner", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "attribute",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "roll",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "name": "AbilityCheck",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "role",
+        "type": "string"
+      }
+    ],
+    "name": "CharacterCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "level",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "attribute1",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value1",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "attribute2",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value2",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "attribute3",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value3",
+        "type": "uint256"
+      }
+    ],
+    "name": "LevelUp",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" },
+      { "internalType": "string", "name": "attribute", "type": "string" },
+      { "internalType": "uint256", "name": "difficulty", "type": "uint256" }
+    ],
+    "name": "abilityCheck",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "playerAddress", "type": "address" }
+    ],
+    "name": "addPlayer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "uint256", "name": "roleId", "type": "uint256" },
+      { "internalType": "string", "name": "contractAddress", "type": "string" },
+      { "internalType": "string", "name": "tokenId", "type": "string" },
+      { "internalType": "uint256", "name": "_strength", "type": "uint256" },
+      { "internalType": "uint256", "name": "_intelligence", "type": "uint256" },
+      { "internalType": "uint256", "name": "_dexterity", "type": "uint256" },
+      { "internalType": "uint256", "name": "_constitution", "type": "uint256" },
+      { "internalType": "uint256", "name": "_charisma", "type": "uint256" }
+    ],
+    "name": "createCharacter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "uint256", "name": "kind", "type": "uint256" },
+      { "internalType": "string", "name": "cid", "type": "string" }
+    ],
+    "name": "createItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" },
+      { "internalType": "string", "name": "attribute", "type": "string" }
+    ],
+    "name": "getCharacterAttribute",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" }
+    ],
+    "name": "getCharacterAvatar",
+    "outputs": [
+      { "internalType": "string[3]", "name": "", "type": "string[3]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" }
+    ],
+    "name": "getCharacterInventory",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              { "internalType": "string", "name": "name", "type": "string" },
+              {
+                "internalType": "enum Campaign.ItemType",
+                "name": "itemType",
+                "type": "uint8"
+              },
+              { "internalType": "string", "name": "cid", "type": "string" }
+            ],
+            "internalType": "struct Campaign.Item[]",
+            "name": "items",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              { "internalType": "string", "name": "name", "type": "string" },
+              {
+                "internalType": "enum Campaign.ItemType",
+                "name": "itemType",
+                "type": "uint8"
+              },
+              { "internalType": "string", "name": "cid", "type": "string" }
+            ],
+            "internalType": "struct Campaign.Item[]",
+            "name": "equipment",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Campaign.Inventory",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPlayers",
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" },
+      { "internalType": "string", "name": "itemName", "type": "string" }
+    ],
+    "name": "giveItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "name": "itemLibrary",
+    "outputs": [
+      { "internalType": "string", "name": "name", "type": "string" },
+      {
+        "internalType": "enum Campaign.ItemType",
+        "name": "itemType",
+        "type": "uint8"
+      },
+      { "internalType": "string", "name": "cid", "type": "string" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" }
+    ],
+    "name": "levelUp",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "sides", "type": "uint256" }
+    ],
+    "name": "rollDie",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "character", "type": "address" },
+      { "internalType": "string", "name": "attribute", "type": "string" },
+      { "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "updateAttribute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
