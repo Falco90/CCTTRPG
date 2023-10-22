@@ -1,14 +1,15 @@
 'use client'
 
+
 import { useEffect, useState } from 'react'
-import UploadItem from "./UploadItem"
+import UploadItemModal from "./UploadItemModal"
+import { Stack, Button, Input } from '@chakra-ui/react'
 
 function GameMasterPanel() {
     return (
-        <div>
-            <h2>Game Master Panel</h2>
-            <UploadItem />
-        </div>
+        <Stack>
+            <UploadItemModal />
+        </Stack>
     )
 }
 

@@ -6,16 +6,26 @@ import { getEthersSigner } from "../utils/ethers"
 import { createWalletClient, custom } from 'viem'
 import { scrollSepolia } from 'viem/chains'
 import { useAccount } from 'wagmi'
+import { Button, Stack, Input, FormControl, FormLabel } from "@chakra-ui/react";
+import { useIsClient } from '../_providers/ClientCtxProvider'
 
 function Decrypt() {
     const [fileURL, setFileURL] = useState(null);
+    const [cidInput, setCidInput] = useState('')
     const { address } = useAccount()
     const [signer, setSigner] = useState(null)
+    const isClient = useIsClient();
+    const [hasWalletClient, setHasWalletClient] = useState(false)
 
-    createWalletClient({
-        chain: scrollSepolia,
-        transport: custom(window.ethereum)
-    })
+    useEffect(() => {
+        createWalletClient({
+            chain: scrollSepolia,
+            transport: custom(window.ethereum)
+        })
+        setHasWalletClient(true)
+        console.log(isClient)
+    }, [isClient])
+
 
     useEffect(() => {
         if (address) {
@@ -25,6 +35,7 @@ function Decrypt() {
     }, [address])
 
     async function getSigner() {
+        console.log("triggered")
         const signer = await getEthersSigner({ chainId: 534351 })
         setSigner(signer)
     }
@@ -39,7 +50,7 @@ function Decrypt() {
     }
 
     async function decrypt() {
-        const cid = "QmbuXaDMRE5Tnop4UV3maG6LtyYQ9bDeP9hYoP5MbBRxzk";
+        const cid = cidInput;
         const { publicKey, signedMessage } = await getSignature();
         const keyObject = await lighthouse.fetchEncryptionKey(
             cid,
@@ -55,15 +66,19 @@ function Decrypt() {
     }
 
     return (
-        <div className="App">
-            <button onClick={() => decrypt()}>decrypt</button>
+        <Stack bgColor='gray.200' p={2} spacing={2}>
+            <FormControl>
+                <FormLabel>Cid to decrypt</FormLabel>
+                <Input bgColor="white" size="md" value={cidInput} onChange={(e) => setCidInput(e.target.value)} />
+            </FormControl>
+            <Button onClick={() => decrypt()}>Decrypt</Button>
             {
                 fileURL ?
-                    <a href={fileURL} target="_blank">viewFile</a>
+                    <a href={fileURL} target="_blank"><Button>View</Button></a>
                     :
                     null
             }
-        </div>
+        </Stack>
     );
 }
 

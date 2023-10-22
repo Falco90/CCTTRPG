@@ -9,6 +9,7 @@ import { getEthersSigner } from '../utils/ethers';
 import { createWalletClient, custom } from 'viem';
 import { scrollSepolia } from 'viem/chains';
 import { useAccount } from 'wagmi'
+import { useIsClient } from '../_providers/ClientCtxProvider'
 
 function ChatPanel() {
     const [messageInput, setMessageInput] = useState('')
@@ -17,12 +18,18 @@ function ChatPanel() {
     const { address } = useAccount()
     const [user, setUser] = useState()
     const chatId = process.env.NEXT_PUBLIC_PUSH_CHAT_ID
+    const isClient = useIsClient();
+    const [hasWalletClient, setHasWalletClient] = useState(false)
 
+    useEffect(() => {
+        createWalletClient({
+            chain: scrollSepolia,
+            transport: custom(window.ethereum)
+        })
+        setHasWalletClient(true)
+        console.log(isClient)
+    }, [isClient])
 
-    const client = createWalletClient({
-        chain: scrollSepolia,
-        transport: custom(window.ethereum)
-    })
 
     useEffect(() => {
         if (address) {
@@ -48,7 +55,6 @@ function ChatPanel() {
         const pushUser = await PushAPI.initialize(signer, { env: 'staging' });
         setUser(pushUser)
 
-        console.log(pushUser)
         const pushSDKSocket = createSocketConnection({
             user: address,
             socketType: 'chat',
