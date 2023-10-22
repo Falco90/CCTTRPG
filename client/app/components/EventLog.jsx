@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react'
 function EventLog() {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
-    useEffect(() => {
-        querySubgraph();
-    }, [])
+    // useEffect(() => {
+    //     querySubgraph();
+    // }, [])
 
 
     async function querySubgraph() {
@@ -48,7 +48,7 @@ function EventLog() {
     }
 
     return (
-        <Stack size="lg" p={5}>
+        <Stack size="lg" p={5} bgColor="gray.100" rounded="md" h="400px" overflowY="scroll">
             <Text>Event Log</Text>
             {messages ? displayEvents() : ""}
         </Stack>
