@@ -188,6 +188,19 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "playerAddress",
+				"type": "address"
+			}
+		],
+		"name": "addPlayer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "string",
 				"name": "name",
 				"type": "string"
@@ -198,14 +211,14 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "address",
+				"internalType": "string",
 				"name": "contractAddress",
-				"type": "address"
+				"type": "string"
 			},
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "tokenId",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"internalType": "uint256",
@@ -296,31 +309,9 @@
 		"name": "getCharacterAvatar",
 		"outputs": [
 			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "enum Campaign.Role",
-						"name": "role",
-						"type": "uint8"
-					},
-					{
-						"internalType": "address",
-						"name": "contractAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct Campaign.Avatar",
+				"internalType": "string[3]",
 				"name": "",
-				"type": "tuple"
+				"type": "string[3]"
 			}
 		],
 		"stateMutability": "view",
@@ -386,6 +377,19 @@
 				"internalType": "struct Campaign.Inventory",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getPlayers",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -472,8 +476,14 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "rollD20",
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "sides",
+				"type": "uint256"
+			}
+		],
+		"name": "rollDie",
 		"outputs": [
 			{
 				"internalType": "uint256",
