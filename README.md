@@ -16,6 +16,6 @@ Ultimately the goal of this project is to bring players from different chains to
 Campaign contract (Scroll sepolia): 0x2A605748090e5aD7B7222CE8A5a3440f9241C4c9
 
 ### instructions Web App
--cd client && npm install
--add .env.local file with the variables in .env.example
--npm run dev
+-cd client && npm install </br>
+-add .env.local file with the variables in .env.example </br>
+-npm run dev 
