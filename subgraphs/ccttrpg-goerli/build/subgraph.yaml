@@ -1,0 +1,33 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Campaign
+    network: goerli
+    source:
+      address: "0x5d95973282a9ef41360493c616E0f844F519F769"
+      abi: Campaign
+      startBlock: 9911879
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AbilityCheck
+        - CharacterCreated
+        - LevelUp
+        - OwnershipTransferred
+      abis:
+        - name: Campaign
+          file: Campaign/abis/Campaign.json
+      eventHandlers:
+        - event: AbilityCheck(string,string,uint256,bool)
+          handler: handleAbilityCheck
+        - event: CharacterCreated(string,string)
+          handler: handleCharacterCreated
+        - event: LevelUp(string,uint256,string,uint256,string,uint256,string,uint256)
+          handler: handleLevelUp
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: Campaign/Campaign.wasm
