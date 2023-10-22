@@ -1,9 +1,12 @@
 import { useAccount, useContractReads } from "wagmi"
 import CampaignABI from "../../abis/CampaignABI.json"
+import { useState} from 'react'
 
 function CharacterAttributes() {
+    const [attributes, setAttributes] = useState({
+
+    })
     const { address } = useAccount()
-    // const address = "0x7a023E867369c1258B356b89A8864c799Ef59959"
     const campaignContract = {
         address: '0xe644100D1B659036BB8797701946ADfD7aF95dD8',
         abi: CampaignABI,
@@ -11,34 +14,38 @@ function CharacterAttributes() {
     const response = useContractReads({
         contracts: [
             {
-                campaignContract,
+                ...campaignContract,
                 functionName: 'getCharacterAttribute',
                 args: [address, "strength"]
             },
             {
-                campaignContract,
+                ...campaignContract,
                 functionName: 'getCharacterAttribute',
                 args: [address, "intelligence"]
             },
             {
-                campaignContract,
+                ...campaignContract,
                 functionName: 'getCharacterAttribute',
                 args: [address, "dexterity"]
             },
             {
-                campaignContract,
+                ...campaignContract,
                 functionName: 'getCharacterAttribute',
                 args: [address, "constitution"]
             },
             {
-                campaignContract,
+                ...campaignContract,
                 functionName: 'getCharacterAttribute',
                 args: [address, "charisma"]
             },
         ],
+        onSettled(data, error) {
+            console.log(data)
+            // data.map((attribute) => setAttributes({...attributes, attributes[attribute]: data.result}))
+        }
     })
 
-    console.log("attributes: ", response)
+    console.log("address, ", address)
 
     return (
         <div>
