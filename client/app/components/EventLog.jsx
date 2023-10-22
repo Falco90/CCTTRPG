@@ -6,22 +6,25 @@ import { useEffect, useState } from 'react'
 function EventLog() {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
-    // useEffect(() => {
-    //     querySubgraph();
-    // }, [])
+    useEffect(() => {
+        querySubgraph();
+    }, [])
 
 
     async function querySubgraph() {
-        await fetch('https://api.studio.thegraph.com/query/55881/ccttrpg-goerli-test/version/latest', {
+        await fetch('https://api.studio.thegraph.com/query/55881/ccttrpg-goerli/version/latest', {
             method: 'POST',
             body: JSON.stringify({
                 query: `{
-            abilityChecks {
-                name
-                attribute
-                roll
-                result
-              }
+                    abilityChecks {
+                        name
+                        attribute
+                        roll
+                      }
+                      characterCreateds {
+                        name
+                        role
+                      }
             }`
             }),
             headers: {
@@ -29,9 +32,13 @@ function EventLog() {
             }
         }).then(async (result) => {
             const data = await result.json();
-            const newMessages = data.data.abilityChecks.map((item) => {
-                return `${item.name} did a ${item.attribute} check and ${item.result ? 'succeeded' : 'failed'} with a roll of ${item.roll}`
+            const abilityChecks = data.data.abilityChecks.map((item) => {
+                return `${item.name} did a ${item.attribute} check and ${item.result ? 'succeeded' : 'failed'} with a roll of ${item.roll}!`
             })
+            const characterCreateds = data.data.characterCreateds.map((item) => {
+                return `a ${item.role} with the name ${item.name} has entered the party!`
+            })
+            const newMessages = [...abilityChecks, ...characterCreateds]
             setMessages(newMessages);
             console.log(messages);
             // setMessage(newMessage);

@@ -1,10 +1,12 @@
 'use client'
 
+import { Flex } from '@chakra-ui/react'
+
 function Header () {
     return (
-        <div>
+        <Flex direction='row-reverse' alignItems='right'>
             <w3m-button />
-        </div>
+        </Flex>
     )
 }
 

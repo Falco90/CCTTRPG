@@ -17,15 +17,6 @@ function Decrypt() {
     const isClient = useIsClient();
     const [hasWalletClient, setHasWalletClient] = useState(false)
 
-    useEffect(() => {
-        createWalletClient({
-            chain: scrollSepolia,
-            transport: custom(window.ethereum)
-        })
-        setHasWalletClient(true)
-        console.log(isClient)
-    }, [isClient])
-
 
     useEffect(() => {
         if (address) {
@@ -37,6 +28,7 @@ function Decrypt() {
     async function getSigner() {
         console.log("triggered")
         const signer = await getEthersSigner({ chainId: 534351 })
+        console.log(signer)
         setSigner(signer)
     }
 
@@ -68,7 +60,7 @@ function Decrypt() {
     return (
         <Stack bgColor='gray.200' p={2} spacing={2}>
             <FormControl>
-                <FormLabel>Cid to decrypt</FormLabel>
+                <FormLabel>Decrypt CID</FormLabel>
                 <Input bgColor="white" size="md" value={cidInput} onChange={(e) => setCidInput(e.target.value)} />
             </FormControl>
             <Button onClick={() => decrypt()}>Decrypt</Button>

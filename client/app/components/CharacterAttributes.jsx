@@ -1,14 +1,12 @@
 import { useAccount, useContractReads } from "wagmi"
 import CampaignABI from "../../abis/CampaignABI.json"
-import { useState} from 'react'
+import { useState } from 'react'
 
 function CharacterAttributes() {
-    const [attributes, setAttributes] = useState({
-
-    })
+    const [attributes, setAttributes] = useState()
     const { address } = useAccount()
     const campaignContract = {
-        address: '0xe644100D1B659036BB8797701946ADfD7aF95dD8',
+        address: process.env.NEXT_PUBLIC_CAMPAIGN_ADDRESS,
         abi: CampaignABI,
     }
     const response = useContractReads({
@@ -41,7 +39,10 @@ function CharacterAttributes() {
         ],
         onSettled(data, error) {
             console.log(data)
-            // data.map((attribute) => setAttributes({...attributes, attributes[attribute]: data.result}))
+            const newAttributes = {}
+            data.map((attribute, i) => setAttributes({ ...newAttributes, i: data.result }))
+            console.log(newAttributes)
+            setAttributes(newAttributes)
         }
     })
 
@@ -49,14 +50,18 @@ function CharacterAttributes() {
 
     return (
         <div>
-            <h2>Character Attributes</h2>
-            <ul>
-                <li>Strength</li>
-                <li>Intelligence</li>
-                <li>Dexterity</li>
-                <li>Constitution</li>
-                <li>Charisma</li>
-            </ul>
+            {attributes ?
+                <>
+                    <h2>Character Attributes</h2>
+                    <ul>
+                        <li>{attributes[0]}</li>
+                        <li>Intelligence</li>
+                        <li>Dexterity</li>
+                        <li>Constitution</li>
+                        <li>Charisma</li>
+                    </ul>
+                </> : ""
+}
         </div>
     )
 }

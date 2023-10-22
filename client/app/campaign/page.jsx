@@ -7,6 +7,8 @@ import EventLog from "../components/EventLog"
 import Header from "../components/Header"
 import { useAccount, useContractRead } from "wagmi"
 import CampaignABI from "../../abis/CampaignABI.json"
+import { Stack, Button } from "@chakra-ui/react"
+import { useState } from 'react'
 
 export default function CampaignPage() {
     const { address } = useAccount()
@@ -15,19 +17,19 @@ export default function CampaignPage() {
         abi: CampaignABI,
         functionName: 'owner',
     })
+    const [isPlayer, setIsPlayer] = useState(true)
 
     return (
         <>
             <Header />
-            <main className="flex min-h-screen flex-row items-center justify-between p-24">
+            <Stack direction='row' spacing={3} px={2} alignItems='center' h='90vh'>
                 <EventLog />
                 <ChatPanel></ChatPanel>
-                {address == data ?
-                    <GameMasterPanel />
-                    :
-                    <PlayerPanel />
-                }
-            </main>
+                {address == owner ?
+                    <GameMasterPanel /> :
+                    <PlayerPanel />}
+
+            </Stack>
         </>
     )
 }

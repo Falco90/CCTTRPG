@@ -15,23 +15,12 @@ function ChatPanel() {
     const [messageInput, setMessageInput] = useState('')
     const [messages, setMessages] = useState([])
     const [signer, setSigner] = useState()
-    const { address } = useAccount()
     const [user, setUser] = useState()
     const chatId = process.env.NEXT_PUBLIC_PUSH_CHAT_ID
-    const isClient = useIsClient();
-    const [hasWalletClient, setHasWalletClient] = useState(false)
+    const { address } = useAccount()
 
     useEffect(() => {
-        createWalletClient({
-            chain: scrollSepolia,
-            transport: custom(window.ethereum)
-        })
-        setHasWalletClient(true)
-        console.log(isClient)
-    }, [isClient])
-
-
-    useEffect(() => {
+        console.log("address triggered")
         if (address) {
             getSigner()
         }
@@ -39,8 +28,8 @@ function ChatPanel() {
     }, [address])
 
     useEffect(() => {
+        console.log(signer)
         if (signer) {
-
             startChat()
         }
     }, [signer])
@@ -50,8 +39,8 @@ function ChatPanel() {
         setSigner(signer)
     }
 
-
     async function startChat() {
+        console.log("chat triggered")
         const pushUser = await PushAPI.initialize(signer, { env: 'staging' });
         setUser(pushUser)
 
@@ -69,31 +58,6 @@ function ChatPanel() {
             }
             setMessages((messages) => [...messages, newMessage])
         });
-
-        // const groupName = "Example Campaign Chat";
-        // const groupDescription = "This is an example group chat for a CCTTRPG campaign";
-        // const groupImage = "data:image/png;base64,iVBORw0K..."; // example base64 encoded image string
-
-        // const newGroup = await user.chat.group.create(groupName,
-        //     {
-        //         description: groupDescription,
-        //         image: groupImage,
-        //         members: ["0x42e02FB5aF30aa379314371ADa1e3035967B569B"],
-        //         admins: [],
-        //         private: false,
-        //         rules: {
-        //             entry: { conditions: [] },
-        //             chat: { conditions: [] },
-        //         },
-        //     },
-        // );
-
-        // console.log(newGroup)
-
-        // const chatId = newGroup.chatId;
-        // setChatId(chatId)
-        // console.log(chatId)
-
     }
 
     async function sendMessage() {

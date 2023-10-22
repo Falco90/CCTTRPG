@@ -85,7 +85,7 @@ function CharacterCreatorModal() {
 
         const { request } = await publicClient.simulateContract({
             account: address,
-            address: '0xe644100D1B659036BB8797701946ADfD7aF95dD8',
+            address: process.env.NEXT_PUBLIC_CAMPAIGN_ADDRESS,
             abi: CampaignABI,
             functionName: 'createCharacter',
             args: [name, parseInt(roleId), nftAddress, tokenId, strength, intelligence, dexterity, constitution, charisma]
