@@ -58,7 +58,7 @@ function ChatPanel() {
 
         pushSDKSocket.on(EVENTS.CHAT_RECEIVED_MESSAGE, (result) => {
             const newMessage = {
-                sender: result.fromDID,
+                sender: result.fromDID.substring(7),
                 content: result.messageContent
             }
             setMessages((messages) => [...messages, newMessage])
@@ -100,18 +100,21 @@ function ChatPanel() {
     function displayMessages() {
         return (
             <Stack>
-                {messages.map((item, i) =>
-                    <Stack key={i} direction='row' spacing={1} alignItems='center'>
-                        <Text bgColor='gray.200' p={1}>{item.sender}</Text>
-                        <Text>{item.content}</Text>
-                    </Stack>)}
+                {messages.map((item, i) => {
+                    return (
+                        <Stack key={i} direction='row' spacing={1} alignItems='center'>
+                            <Text bgColor='gray.200' size='sm' p={1}>{item.sender}</Text>
+                            <Text>{item.content}</Text>
+                        </Stack>)
+                }
+                )}
             </Stack>
         )
     }
 
     return (
         <div>
-            <Flex size="lg" bgColor="gray.100" h="400px" p={2} direction='column'>
+            <Flex size="lg" bgColor="gray.100" h="400px" p={2} direction='column' w="800px">
                 {messages ? displayMessages() : ""}
                 <Spacer />
                 <Stack direction='row' spacing={1}>

@@ -9,11 +9,11 @@ type ProviderType = {
 
 const Providers = ({ children }: ProviderType) => {
   return (
-    <WagmiProvider>
-      <ChakraUiProvider>
-        {children}
-      </ChakraUiProvider>
-    </WagmiProvider>
+      <WagmiProvider>
+        <ChakraUiProvider>
+          {children}
+        </ChakraUiProvider>
+      </WagmiProvider>
   )
 }
 
